@@ -83,7 +83,7 @@ connexion();
                         <label for="ville_clients">Ville</label>
                         <input type="text" id="ville_clients" name="ville_clients" class="form-control">
                     </div>
-                    <button class="btn btn-primary" type="submit" name="ajouter" value="OK">Ajouter</button>
+                    <button class="btn btn-warning" type="submit" name="ajouter" value="OK">Ajouter</button>
                 </form>
                 </form>
                 <?php

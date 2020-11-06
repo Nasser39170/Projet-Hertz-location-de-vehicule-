@@ -96,14 +96,14 @@ function modifierv(){
     echo " <form>
     <div>
 
-    <input type='text' name='id' value='".$voitures['id_voitures']."'>
+    <input type='text' size='13' name='id' value='".$voitures['id_voitures']."'>
     <input type='text' name='modelev' value='".$voitures['nom_voitures']."'>
     <input type='text' name='marquev' value='".$voitures['marque_voitures']."'>
     <input type='text' name='descriptionv' value='".$voitures['description_voitures']."'>
     <input type='text' name='disponibilitev' value='".$voitures['disponibilite']."'>
 
-    <button type='submit' value='modifier' name='modifier'>Modifier</button>
-    <button type='submit' value='supprimer' name='supprime'>Supprimer</button>
+    <button type='submit' class='btn btn-dark' value='modifier' name='modifier'>Modifier</button>
+    <button type='submit' class='btn btn-danger' value='supprimer' name='supprime'>Supprimer</button>
 
     </form>
     </div>";
@@ -213,15 +213,15 @@ function modifierc(){
     <div>
 
     <input type='text' size='6' name='id' value='".$clients['id_clients']."'>
-    <input type='text' name='nom' value='".$clients['nom_clients']."'>
+    <input type='text' size='12' name='nom' value='".$clients['nom_clients']."'>
     <input type='text' size='6' name='prenom' value='".$clients['prenom_clients']."'>
     <input type='text' name='adresse' value='".$clients['adresse_clients']."'>
     <input type='text' size='6' name='cp' value='".$clients['cp_clients']."'>
     <input type='text' name='ville' value='".$clients['ville_clients']."'>
 
-    <button type='submit' value='modifier' name='modifier'>Modifier</button>
-    <button type='submit' value='supprimer' name='supprime'>Supprimer</button>
-    <button type='submit' value='historique' name='action' onclick='window.location.hash=\"historique\";'>Historique</button>
+    <button type='submit' value='modifier' class='btn btn-dark' name='modifier'>Modifier</button>
+    <button type='submit' value='supprimer' class='btn btn-danger' name='supprime'>Supprimer</button>
+    <button type='submit' value='historique'class='btn btn-warning' name='action' onclick='window.location.hash=\"historique\";'>Historique</button>
     </form>
     </div>";
     }
@@ -303,13 +303,43 @@ function historiquec(){
     $recup= $bdd->prepare('SELECT clients.id_clients, nom_clients, prenom_clients, marque_voitures, id_louer, louer.date_debut, louer.date_fin, voitures.id_voitures, nom_voitures
     FROM clients 
     INNER JOIN louer ON clients.id_clients = louer.id_clients
-    INNER JOIN voitures ON louer.id_voitures = voitures.id_voitures 
-    INNER JOIN retour ON voitures.id_voitures = retour.id_voitures WHERE (louer.date_fin >= NOW())  AND retour.id_clients = :client AND clients.id_clients = :client');
+    INNER JOIN voitures ON louer.id_voitures = voitures.id_voitures WHERE (louer.date_fin >= NOW()) AND clients.id_clients = :client');
     $recup->bindParam(':client', $client);
     $recup->execute();
 
     echo '<div class="container my-5">
     <h2 class=" text-center py-5"> Historique des véhicules en cours de location</h2>
+    <table class="table">
+    <thead class="bg_entete_tab">
+    <tr>
+    <th scope="col">Marque</th>
+    <th scope="col">Modèle</th>
+    <th scope="col">Début de Location</th>
+    <th scope="col">Fin de Location</th>
+    </tr>
+    </thead>
+    <tbody>';
+
+    
+    while($donnees = $recup->fetch())
+    {
+    echo '<tr class=" "><td>'.$donnees['nom_voitures'].'</td><td>'.$donnees['marque_voitures'].'</td><td>'.$donnees['date_debut'].'</td><td>'.$donnees['date_fin'].'</td></tr>';
+    }
+    echo'</tbody></table></div>';
+    }
+    if(isset($_GET['action']) && $_GET['action']=="historique"){
+    $nom_client = $_GET['nom'];
+    $prenom_client = $_GET['prenom'];
+    $client = $_GET['id'];
+    $recup= $bdd->prepare('SELECT clients.id_clients, nom_clients, prenom_clients, marque_voitures, id_louer, louer.date_debut, louer.date_fin, voitures.id_voitures, nom_voitures
+    FROM clients 
+    INNER JOIN louer ON clients.id_clients = louer.id_clients
+    INNER JOIN voitures ON louer.id_voitures = voitures.id_voitures WHERE (louer.date_fin <= NOW()) AND clients.id_clients = :client');
+    $recup->bindParam(':client', $client);
+    $recup->execute();
+
+    echo '<div class="container my-5">
+    <h2 class=" text-center py-5"> Véhicule en retard</h2>
     <table class="table">
     <thead class="bg_entete_tab">
     <tr>
@@ -327,7 +357,8 @@ function historiquec(){
     }
     echo'</tbody></table></div>';
     }
-
+    
+    
 }
 
 // ===========================================PARTIE LOCATION=============================================
@@ -467,7 +498,7 @@ function retourl(){
     <input type='text' size='6' name='disponibilitev' value='".$voitures['marque_voitures']."'>
     <input type='text' name='disponibilitev' value='".$voitures['date_fin']."'>
 
-    <button type='submit' value='supprimer' name='suppr'>Véhicule retourner</button>
+    <button type='submit' class='btn btn-success' value='supprimer' name='suppr'>Véhicule retourner</button>
 
     </form>
     </div>";

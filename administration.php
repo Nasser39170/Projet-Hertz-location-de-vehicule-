@@ -84,14 +84,14 @@ connexion();
                         <input type="radio" id="invalide" name="disponibilite" value="image/invalide.png">
                         <label for="indispo">Indisponible</label>
                     </div>
-                    <button class="btn btn-primary" type="submit" name="ajouter" value="ok">Ajouter</button>
+                    <button class="btn btn-warning" type="submit" name="ajouter" value="ok">Ajouter</button>
                 </form>
             </section>
         </div>
 
 <div class="row">
 <section class="col-12">
-<h2 class="d-flex justify-content-center">Modifier un véhicule</h2>
+<h2 class="d-flex justify-content-center">Modifier un véhicule</h2><br />
 
 <?php
 modifierv();
