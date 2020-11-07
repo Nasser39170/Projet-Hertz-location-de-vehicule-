@@ -21,7 +21,7 @@ connexion();
     <a href="logout.php">Déconnexion</a>
     </div>
 		<div class="sucess">
-        <img src="hertz.png" alt="img"/>
+        <center><img src="hertz.png" alt="img"/></center>
         </div>
         <div class="d-flex justify-content-center">
         <nav class="navbar navbar-light bg-light">
